@@ -1,8 +1,12 @@
 import connection from "../database/dbConnection.js"
 
 
-function index(req, res) {
-    const query = "SELECT * FROM movies";
+function index(req, res, next) {
+    const query = `SELECT movies .* , CAST (AVG( reviews. vote) AS FLOAT) AS avg_vote 
+    FROM movies 
+    LEFT JOIN reviews 
+    ON movies.id = reviews.movie_id 
+    GROUP BY movies.id`;
 
     connection.query(query, (err, result) => {
         if (err) return next(err);
