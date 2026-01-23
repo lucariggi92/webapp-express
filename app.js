@@ -5,7 +5,9 @@ import cors from "cors"
 const app = express ();
 const port = process.env.SERVER_PORT;
 
-app.use(cors({origin: "http://localhost:5173"}))
+app.use(cors({origin:process.env.FRONTEND_URL}))
+
+app.use(express.static("public"))
 
 app.use("/api/movies", moviesRouter)
 
